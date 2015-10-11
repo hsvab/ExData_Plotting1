@@ -20,14 +20,26 @@ filtered_data <- data[data$DT >= '2007-02-01' & data$DT < '2007-02-03', ]
 Sys.setlocale(category="LC_TIME", locale="C")
 filtered_data$dia_da_semana <- weekdays(filtered_data$DT)
 
-#Opening PNG device; create 'plot3.png' in my working directory
-png(file = "plot3.png") 
+#Opening PNG device; create 'plot4.png' in my working directory
+png(file = "plot4.png") 
 
-#Drawing the 3 Scatterplot in overlay
+#Defining a grid of two rows and two columns
+par(mfrow = c(2,2))
+
+#Plotting Graph 1
+with(filtered_data, plot(DT, Global_active_power, type="l", xlab = "", ylab = "Global Active Power (kilowatts)"))
+
+#Plotting Graph 2
+with(filtered_data, plot(DT, Voltage, type="l", xlab = "datetime", ylab = "Voltage"))
+
+#Plotting Graph 3
 plot(filtered_data$DT, filtered_data$Sub_metering_1, col = "black", type = "l", xlab="", ylab = "Energy sub metering")
 lines(filtered_data$DT, filtered_data$Sub_metering_2, col = "red", type="l", xlab = "", ylab = "")
 lines(filtered_data$DT, filtered_data$Sub_metering_3, col = "blue", type="l", xlab = "", ylab = "")
-legend("topright", c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), lty=1, col=c("black", "red", "blue"))
+legend("topright", c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), lty=1, col=c("black", "red", "blue"), bty='n', cex=.75)
+
+#Plotting Graph 4
+with(filtered_data, plot(DT, Global_reactive_power, type="l", xlab = "datetime", ylab = "Global_reactive_power"))
 
 #Closing de the PNG device
 dev.off()
